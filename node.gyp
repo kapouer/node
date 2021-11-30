@@ -896,32 +896,34 @@
             },
           ],
         }],
-      ],
-      'actions': [
-        {
-          'action_name': 'node_js2c',
-          'process_outputs_as_sources': 1,
-          'inputs': [
-            # Put the code first so it's a dependency and can be used for invocation.
-            'tools/js2c.py',
-            '<@(library_files)',
-            '<@(deps_files)',
-            'config.gypi'
-          ],
-          'outputs': [
-            '<(SHARED_INTERMEDIATE_DIR)/node_javascript.cc',
-          ],
-          'action': [
-            '<(python)',
-            'tools/js2c.py',
-            '--directory',
-            'lib',
-            '--target',
-            '<@(_outputs)',
-            'config.gypi',
-            '<@(deps_files)',
-          ],
-        },
+        [ 'node_builtin_modules_path==""' , {
+          'actions': [
+            {
+              'action_name': 'node_js2c',
+              'process_outputs_as_sources': 1,
+              'inputs': [
+                # Put the code first so it's a dependency and can be used for invocation.
+                'tools/js2c.py',
+                '<@(library_files)',
+                '<@(deps_files)',
+                'config.gypi'
+              ],
+              'outputs': [
+                '<(SHARED_INTERMEDIATE_DIR)/node_javascript.cc',
+              ],
+              'action': [
+                '<(python)',
+                'tools/js2c.py',
+                '--directory',
+                'lib',
+                '--target',
+                '<@(_outputs)',
+                'config.gypi',
+                '<@(deps_files)',
+              ],
+            },
+          ]
+        }],
       ],
     }, # node_lib_target_name
     {
